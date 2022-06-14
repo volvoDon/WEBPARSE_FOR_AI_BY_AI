@@ -12,12 +12,17 @@ def textArray(URL) :
     pst = PunktSentenceTokenizer()
     html_text = requests.get(URL).text 
     soup = BeautifulSoup(html_text, 'html.parser')
-    
+    textExport = []
     text = []
     for para in soup.find_all("p"):
         sentenceBlock = pst.tokenize(para.get_text())
         text.append(sentenceBlock)
-    print(text)
+    
+    for block in text :
+        for crumb in block:
+            textExport.append(crumb)
+
+    return textExport
 
     
 
@@ -29,4 +34,4 @@ def textArray(URL) :
 
 
 if __name__ == "__main__":
-    textArray("https://en.wikipedia.org/wiki/Mao_Chaofeng")
+    print(textArray("https://en.wikipedia.org/wiki/Mao_Chaofeng"))
