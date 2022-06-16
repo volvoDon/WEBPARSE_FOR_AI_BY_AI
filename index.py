@@ -1,4 +1,5 @@
 import os ;
+import csv ;
 import requests ;
 import openai ;
 import numpy ;
@@ -35,27 +36,32 @@ class theMind :
     def toCSV(ARRAY,API_KEY):
         QA_pairs = [["prompt","completion"]]
         openai.api_key = API_KEY
-        print(openai.api_key)
+        for block in ARRAY :
+            textPrompt = "\What question would illicit this completion:\n"+"\ncompletion: "+block+"\n"+"\nprompt:"
+            
+            completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.05)
+            
+            textcompletion = completion.choices[0].text
 
+            QA_pairs.append([textcompletion,block]) 
 
+        with open('output.csv', 'w') as f:
+            # create the csv writer
+            writer = csv.writer(f)
 
-
-
+            for block in QA_pairs : # write a row to the csv file
+                writer.writerow(block)
+        
+        
 #function exports jsonl for testing and training 
 #the next version will create a tuned model directly
 #I don't want my card linked to this unsteady monster right away
 
     
 
-
-    
-
-
-
-
-
 if __name__ == "__main__":
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
-    theMind.toCSV([],API_KEY)
+    text = textArray("https://en.wikipedia.org/wiki/Zoltán_Opata")
+    theMind.toCSV(text,API_KEY)
     print("done")
