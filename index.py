@@ -62,6 +62,6 @@ class theMind :
 if __name__ == "__main__":
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
-    text = textArray("https://en.wikipedia.org/wiki/Zoltán_Opata")
+    text = textArray("https://en.wikipedia.org/wiki/Laundry")
     theMind.toCSV(text,API_KEY)
     print("done")
