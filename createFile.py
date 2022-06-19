@@ -57,11 +57,12 @@ class theMind :
 #the next version will create a tuned model directly
 #I don't want my card linked to this unsteady monster right away
 
-    
-
-if __name__ == "__main__":
+def main (URL):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
-    text = textArray("https://en.wikipedia.org/wiki/Laundry")
+    text = textArray(URL)
     theMind.toCSV(text,API_KEY)
     print("done")
+
+if __name__ == "__main__":
+    main('https://en.wikipedia.org/wiki/61st_Bombardment_Squadron')
