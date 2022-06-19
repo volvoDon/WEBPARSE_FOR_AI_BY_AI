@@ -57,7 +57,7 @@ class theMind :
 #the next version will create a tuned model directly
 #I don't want my card linked to this unsteady monster right away
 
-def main (URL):
+def run (URL):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     text = textArray(URL)
@@ -65,4 +65,4 @@ def main (URL):
     print("done")
 
 if __name__ == "__main__":
-    main('https://en.wikipedia.org/wiki/61st_Bombardment_Squadron')
+    run()
