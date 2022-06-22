@@ -2,10 +2,11 @@ import os ;
 import csv ;
 import requests ;
 import openai ;
-import numpy ;
+import json ;
 from bs4 import BeautifulSoup ;
 from nltk import PunktSentenceTokenizer ;
 from dotenv import load_dotenv ;
+
 
 #See README.txt for full overview
 
@@ -52,7 +53,7 @@ class theMind :
             for block in QA_pairs : # write a row to the csv file
                 writer.writerow(block)
 
-        def toJSON(ARRAY,API_KEY):
+    def toJSON(ARRAY,API_KEY):
         QA_pairs = [["prompt","completion"]]
         openai.api_key = API_KEY
         for block in ARRAY :
@@ -63,6 +64,10 @@ class theMind :
             textcompletion = completion.choices[0].text
 
             QA_pairs.append([textcompletion,block])
+
+        APIresponse = json.dumps(QA_pairs)
+
+        return APIresponse
         
         
 #function exports jsonl for testing and training 
@@ -73,8 +78,10 @@ def run (URL):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     text = textArray(URL)
-    theMind.toCSV(text,API_KEY)
+    #theMind.toCSV(text,API_KEY)
+    Object = theMind.toJSON(text,API_KEY)
     print("done")
+    return Object
 
 if __name__ == "__main__":
     run()
