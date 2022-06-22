@@ -65,9 +65,10 @@ class theMind :
 
             QA_pairs.append([textcompletion,block])
 
-        APIresponse = json.dumps(QA_pairs)
+        #APIresponse = json.dumps(QA_pairs)
 
-        return APIresponse
+        #return APIresponse
+        return QA_pairs
         
         
 #function exports jsonl for testing and training 
@@ -75,9 +76,10 @@ class theMind :
 #I don't want my card linked to this unsteady monster right away
 
 def run (URL):
+    url="http://en.wikipedia.org/wiki/"+URL
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
-    text = textArray(URL)
+    text = textArray(url)
     #theMind.toCSV(text,API_KEY)
     Object = theMind.toJSON(text,API_KEY)
     print("done")

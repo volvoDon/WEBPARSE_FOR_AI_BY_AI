@@ -1,8 +1,8 @@
 from unicodedata import name
 from xml.etree.ElementTree import tostring ;
 import createFile ;
-from flask import Flask ;
-from flask import url_for ;
+from flask import Flask, jsonify ;
+
 
 app = Flask(__name__)
 
@@ -13,11 +13,12 @@ def hello_world():
 @app.route("/getpairs/<wikiurl>")
 def getpairs(wikiurl):
     #return createFile.run(wikiurl)
-    return f'Pair {createFile.run(wikiurl)}'
+    data = createFile.run(wikiurl)
+    return jsonify({'data':data}) 
 
 
 
-#response = createFile.run("https://en.wikipedia.org/wiki/Yuzuki_Akiyama")
+#response = createFile.run("Yuzuki_Akiyama")
 
 #print(response)
 
