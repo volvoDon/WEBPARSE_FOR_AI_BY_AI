@@ -51,6 +51,18 @@ class theMind :
 
             for block in QA_pairs : # write a row to the csv file
                 writer.writerow(block)
+
+        def toJSON(ARRAY,API_KEY):
+        QA_pairs = [["prompt","completion"]]
+        openai.api_key = API_KEY
+        for block in ARRAY :
+            textPrompt = "\What question would illicit this completion:\n"+"\ncompletion: "+block+"\n"+"\nprompt:"
+            
+            completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.05)
+            
+            textcompletion = completion.choices[0].text
+
+            QA_pairs.append([textcompletion,block])
         
         
 #function exports jsonl for testing and training 
