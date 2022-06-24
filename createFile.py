@@ -1,5 +1,6 @@
 import os ;
-import csv ;
+import csv
+from pickle import TRUE ;
 import requests ;
 import openai ;
 import json ;
@@ -53,35 +54,35 @@ class theMind :
             for block in QA_pairs : # write a row to the csv file
                 writer.writerow(block)
 
-    def toJSON(ARRAY,API_KEY):
-        QA_pairs = [["prompt","completion"]]
-        openai.api_key = API_KEY
-        for block in ARRAY :
-            textPrompt = "\What question would illicit this completion:\n"+"\ncompletion: "+block+"\n"+"\nprompt:"
+    def toJSON(ARRAY,API_KEY,USER_KEY=TRUE):
+        if (USER_KEY) :
+            QA_pairs = [["prompt","completion"]]
+            openai.api_key = API_KEY
+            for block in ARRAY :
+                textPrompt = "\What question would illicit this completion:\n"+"\ncompletion: "+block+"\n"+"\nprompt:"
             
-            completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.05)
+                completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.05)
             
-            textcompletion = completion.choices[0].text
+                textcompletion = completion.choices[0].text
 
-            QA_pairs.append([textcompletion,block])
+                QA_pairs.append([textcompletion,block])
 
-        #APIresponse = json.dumps(QA_pairs)
-
-        #return APIresponse
-        return QA_pairs
+            return QA_pairs
+        else :
+            return "invalid verification"
         
         
 #function exports jsonl for testing and training 
 #the next version will create a tuned model directly
 #I don't want my card linked to this unsteady monster right away
 
-def run (URL):
+def run (URL,USER_KEY=TRUE):
     url="http://en.wikipedia.org/wiki/"+URL
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     text = textArray(url)
     #theMind.toCSV(text,API_KEY)
-    Object = theMind.toJSON(text,API_KEY)
+    Object = theMind.toJSON(text,API_KEY,USER_KEY)
     print("done")
     return Object
 
