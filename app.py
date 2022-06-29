@@ -10,7 +10,7 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World but Different!</p>"
 
-@app.route("/getpairs/<wikiurl>/<USER_KEY>")
+@app.route("/get/<wikiurl>/<USER_KEY>")
 def getpairs(wikiurl,USER_KEY):
     #return createFile.run(wikiurl)
     data = createFile.run(wikiurl,USER_KEY)

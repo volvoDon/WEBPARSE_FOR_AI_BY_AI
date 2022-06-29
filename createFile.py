@@ -1,6 +1,6 @@
 import os ;
 import csv
-from pickle import TRUE ;
+from pickle import FALSE, TRUE ;
 import requests ;
 import openai ;
 import json ;
@@ -54,8 +54,8 @@ class theMind :
             for block in QA_pairs : # write a row to the csv file
                 writer.writerow(block)
 
-    def toJSON(ARRAY,API_KEY,USER_KEY=TRUE):
-        if (USER_KEY) :
+    def toJSON(ARRAY,API_KEY,USER_KEY):
+        if (USER_KEY == os.getenv("USER_KEY")) :
             QA_pairs = [["prompt","completion"]]
             openai.api_key = API_KEY
             for block in ARRAY :
@@ -76,7 +76,7 @@ class theMind :
 #the next version will create a tuned model directly
 #I don't want my card linked to this unsteady monster right away
 
-def run (URL,USER_KEY=TRUE):
+def run (URL,USER_KEY=FALSE):
     url="http://en.wikipedia.org/wiki/"+URL
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
