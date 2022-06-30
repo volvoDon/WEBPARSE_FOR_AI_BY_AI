@@ -61,7 +61,7 @@ class theMind :
             for block in ARRAY :
                 textPrompt = "\What question would illicit this completion:\n"+"\ncompletion: "+block+"\n"+"\nprompt:"
             
-                completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.05)
+                completion = openai.Completion.create(engine="text-curie-001", prompt=textPrompt,temperature=.1)
             
                 textcompletion = completion.choices[0].text
 
